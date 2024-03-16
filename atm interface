@@ -1,0 +1,111 @@
+import java.util.Scanner;
+
+// Main class to run the ATM application
+public class ATMSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Create an instance of ATM
+        ATM atm = new ATM();
+
+        // Prompt for user ID and PIN
+        System.out.print("Enter User ID: ");
+        String userID = scanner.nextLine();
+        System.out.print("Enter PIN: ");
+        String pin = scanner.nextLine();
+
+        // Authenticate user
+        if (atm.authenticate(userID, pin)) {
+            System.out.println("Authentication successful. Welcome!");
+            boolean exit = false;
+
+            // Main menu loop
+            while (!exit) {
+                System.out.println("Choose an option:");
+                System.out.println("1. Transactions History");
+                System.out.println("2. Withdraw");
+                System.out.println("3. Deposit");
+                System.out.println("4. Transfer");
+                System.out.println("5. Quit");
+
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+
+                switch (choice) {
+                    case 1:
+                        atm.showTransactionHistory();
+                        break;
+                    case 2:
+                        System.out.print("Enter amount to withdraw: ");
+                        double withdrawAmount = scanner.nextDouble();
+                        atm.withdraw(withdrawAmount);
+                        break;
+                    case 3:
+                        System.out.print("Enter amount to deposit: ");
+                        double depositAmount = scanner.nextDouble();
+                        atm.deposit(depositAmount);
+                        break;
+                    case 4:
+                        System.out.print("Enter recipient's account number: ");
+                        String recipientAccount = scanner.nextLine();
+                        System.out.print("Enter amount to transfer: ");
+                        double transferAmount = scanner.nextDouble();
+                        atm.transfer(recipientAccount, transferAmount);
+                        break;
+                    case 5:
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            }
+        } else {
+            System.out.println("Authentication failed. Exiting...");
+        }
+
+        scanner.close();
+    }
+}
+
+// Class representing the ATM functionalities
+class ATM {
+    // Dummy data for demonstration purposes
+    private String userID = "123456";
+    private String pin = "7890";
+    private double balance = 1000.0; // Initial balance
+
+    // Authentication method
+    public boolean authenticate(String userID, String pin) {
+        return this.userID.equals(userID) && this.pin.equals(pin);
+    }
+
+    // Method to show transaction history
+    public void showTransactionHistory() {
+        // Implement logic to show transaction history
+        System.out.println("Transaction History:");
+        // Dummy implementation
+        System.out.println("No transactions yet.");
+    }
+
+    // Method to withdraw money
+    public void withdraw(double amount) {
+        if (amount > balance) {
+            System.out.println("Insufficient funds.");
+        } else {
+            balance -= amount;
+            System.out.println("Withdrawal successful. Remaining balance: " + balance);
+        }
+    }
+
+    // Method to deposit money
+    public void deposit(double amount) {
+        balance += amount;
+        System.out.println("Deposit successful. New balance: " + balance);
+    }
+
+    // Method to transfer money
+    public void transfer(String recipientAccount, double amount) {
+        // Implement logic to transfer money
+        System.out.println("Transfer successful.");
+    }
+}
